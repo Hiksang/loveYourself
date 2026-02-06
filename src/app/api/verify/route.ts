@@ -38,11 +38,20 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    console.log("[verify] Calling verifyCloudProof with:", {
+      app_id,
+      action,
+      nullifier_hash: payload.nullifier_hash,
+      verification_level: payload.verification_level,
+    });
+
     const verifyRes = (await verifyCloudProof(
       payload,
       app_id,
       action
     )) as IVerifyResponse;
+
+    console.log("[verify] verifyCloudProof result:", JSON.stringify(verifyRes));
 
     if (verifyRes.success) {
       const nullifierHash = payload.nullifier_hash;

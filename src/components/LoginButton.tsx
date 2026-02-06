@@ -43,18 +43,19 @@ export function LoginButton() {
       });
 
       const result = await res.json();
+      console.log("[World ID] verify response:", JSON.stringify(result));
       if (result.status === "success") {
         // World ID 인증 성공 → 로그인 + 성인인증 동시 완료
         login(result.nullifierHash, result.nullifierHash);
         verify();
       } else {
-        console.error("Verify failed:", result);
-        const detail = result.detail ? ` (${result.detail})` : "";
-        setError(`인증에 실패했습니다${detail}. 다시 시도해주세요.`);
+        console.error("[World ID] Verify failed:", JSON.stringify(result));
+        const detail = result.detail || result.message || "";
+        setError(`인증 실패: ${detail || "알 수 없는 오류"}. 다시 시도해주세요.`);
       }
     } catch (err) {
-      console.error("World ID login error:", err);
-      setError("오류가 발생했습니다");
+      console.error("[World ID] login error:", err);
+      setError(`오류 발생: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setLoading(false);
     }

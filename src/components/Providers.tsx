@@ -9,6 +9,8 @@ import { Suspense, useEffect, type ReactNode } from "react";
 export function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
     MiniKit.install(process.env.NEXT_PUBLIC_APP_ID);
+    // Eruda mobile console for debugging
+    import("eruda").then((eruda) => eruda.default.init());
   }, []);
 
   return (
