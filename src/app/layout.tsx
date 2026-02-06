@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} font-sans antialiased`}>
         <Providers>
-          <main className="min-h-screen pb-20">{children}</main>
+          <main className="min-h-dvh pb-24">{children}</main>
           <BottomNav />
         </Providers>
       </body>

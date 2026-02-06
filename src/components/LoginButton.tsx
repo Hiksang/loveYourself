@@ -12,7 +12,7 @@ export function LoginButton() {
   const handleWorldIdLogin = async () => {
     if (!MiniKit.isInstalled()) {
       // Dev fallback: simulate login + verify
-      login("0xdev_test_address");
+      login("0xdev_test_address", "0xDev_nullifier_hash_for_testing");
       verify();
       return;
     }
@@ -46,7 +46,7 @@ export function LoginButton() {
       if (result.status === "success") {
         // World ID 인증 성공 → 로그인 + 성인인증 동시 완료
         const address = `0x${finalPayload.nullifier_hash.slice(2, 42)}`;
-        login(address);
+        login(address, finalPayload.nullifier_hash);
         verify();
       } else {
         setError("인증에 실패했습니다. 다시 시도해주세요.");
@@ -66,9 +66,6 @@ export function LoginButton() {
           <div className="h-2 w-2 rounded-full bg-green-500" />
           <span className="text-sm font-medium text-green-700">
             World ID 인증됨
-          </span>
-          <span className="text-xs text-muted">
-            {walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}
           </span>
         </div>
         <button

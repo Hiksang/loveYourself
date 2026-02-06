@@ -36,7 +36,7 @@ export default function OrdersPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
+      <div className="flex min-h-[80dvh] flex-col items-center justify-center px-6 text-center">
         <span className="mb-4 text-6xl">🔒</span>
         <h2 className="mb-2 text-xl font-bold">로그인이 필요합니다</h2>
         <button
@@ -51,7 +51,7 @@ export default function OrdersPage() {
 
   if (orders.length === 0) {
     return (
-      <div className="flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
+      <div className="flex min-h-[80dvh] flex-col items-center justify-center px-6 text-center">
         <span className="mb-4 text-6xl">📦</span>
         <h2 className="mb-2 text-xl font-bold">주문 내역이 없습니다</h2>
         <p className="mb-6 text-sm text-muted">
@@ -69,7 +69,7 @@ export default function OrdersPage() {
 
   return (
     <div className="px-6 pt-6 pb-8">
-      <h1 className="mb-6 text-2xl font-bold">주문 내역</h1>
+      <h1 className="mb-4 text-2xl font-bold">주문 내역</h1>
 
       <div className="space-y-4">
         {orders.map((order) => (

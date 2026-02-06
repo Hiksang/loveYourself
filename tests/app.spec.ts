@@ -20,6 +20,7 @@ test.describe("홈 페이지", () => {
     // 하단 네비게이션
     await expect(page.locator("text=홈")).toBeVisible();
     await expect(page.locator("text=상품")).toBeVisible();
+    await expect(page.locator("text=커뮤니티")).toBeVisible();
     await expect(page.locator("text=장바구니")).toBeVisible();
     await expect(page.locator("text=주문")).toBeVisible();
   });
@@ -241,6 +242,11 @@ test.describe("네비게이션", () => {
     await page.locator("nav a:has-text('상품')").click();
     await page.waitForURL("**/products**");
     await expect(page.locator("h1:has-text('상품')")).toBeVisible();
+
+    // 커뮤니티 탭 클릭
+    await page.locator("nav a:has-text('커뮤니티')").click();
+    await page.waitForURL("**/community**");
+    await expect(page.locator("h1:has-text('커뮤니티')")).toBeVisible();
 
     // 장바구니 탭 클릭
     await page.locator("nav a:has-text('장바구니')").click();

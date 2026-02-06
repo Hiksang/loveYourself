@@ -2,6 +2,7 @@
 
 import { MiniKit } from "@worldcoin/minikit-js";
 import { CartProvider } from "@/store/cart";
+import { WishlistProvider } from "@/store/wishlist";
 import { AuthProvider } from "@/components/AuthContext";
 import { Suspense, useEffect, type ReactNode } from "react";
 
@@ -13,7 +14,9 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <Suspense>
       <AuthProvider>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          <WishlistProvider>{children}</WishlistProvider>
+        </CartProvider>
       </AuthProvider>
     </Suspense>
   );

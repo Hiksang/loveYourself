@@ -7,6 +7,7 @@ import { useCart } from "@/store/cart";
 const tabs = [
   { href: "/", label: "홈", icon: "🏠" },
   { href: "/products", label: "상품", icon: "💜" },
+  { href: "/community", label: "커뮤니티", icon: "💬" },
   { href: "/cart", label: "장바구니", icon: "🛒" },
   { href: "/orders", label: "주문", icon: "📦" },
 ];
@@ -16,7 +17,7 @@ export function BottomNav() {
   const { itemCount } = useCart();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-surface/95 backdrop-blur-sm">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-surface/95 backdrop-blur-sm" style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)" }}>
       <div className="mx-auto flex max-w-lg">
         {tabs.map((tab) => {
           const isActive =

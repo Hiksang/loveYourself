@@ -15,7 +15,7 @@ export default function Home() {
       <Header />
       <div className="px-6">
         {/* Hero */}
-        <div className="mb-8 mt-4 text-center">
+        <div className="mb-8 mt-4 text-center" style={{ marginTop: 16 }}>
           <div className="mb-4 text-6xl">💜</div>
           <h2 className="mb-2 text-3xl font-bold tracking-tight">
             <span className="text-primary">Love</span> Yourself
@@ -85,6 +85,24 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        {/* Gift card */}
+        {authenticated && (
+          <div className="mb-8">
+            <button
+              onClick={() => router.push("/gift")}
+              className="w-full rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 p-5 text-left transition-all hover:shadow-md"
+            >
+              <div className="flex items-center gap-4">
+                <span className="text-4xl">🎁</span>
+                <div>
+                  <h3 className="font-bold">익명 선물하기</h3>
+                  <p className="text-xs text-muted">상품을 골라 소중한 사람에게 익명으로 선물하세요</p>
+                </div>
+              </div>
+            </button>
+          </div>
+        )}
 
         {/* Features */}
         <div className="mb-8">

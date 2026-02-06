@@ -3,7 +3,7 @@
 import { useAuth } from "@/components/AuthContext";
 
 export function Header() {
-  const { isLoggedIn, isVerified, walletAddress } = useAuth();
+  const { isLoggedIn, isVerified } = useAuth();
 
   return (
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm px-6 py-4">
@@ -11,16 +11,10 @@ export function Header() {
         <h1 className="text-xl font-bold tracking-tight">
           <span className="text-primary">Love</span> Yourself
         </h1>
-        {isLoggedIn && (
-          <div className="flex items-center gap-2">
-            {isVerified && (
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100 text-xs">
-                ✓
-              </span>
-            )}
-            <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-              {walletAddress?.slice(0, 4)}...{walletAddress?.slice(-3)}
-            </span>
+        {isLoggedIn && isVerified && (
+          <div className="flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1">
+            <div className="h-2 w-2 rounded-full bg-green-500" />
+            <span className="text-xs font-medium text-green-700">인증됨</span>
           </div>
         )}
       </div>

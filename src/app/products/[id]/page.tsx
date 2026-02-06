@@ -20,7 +20,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
+      <div className="flex min-h-[80dvh] flex-col items-center justify-center px-6 text-center">
         <span className="mb-4 text-5xl">🔍</span>
         <h2 className="mb-2 text-xl font-bold">상품을 찾을 수 없습니다</h2>
         <button
@@ -59,8 +59,8 @@ export default function ProductDetailPage() {
       </span>
 
       {/* Product info */}
-      <h1 className="mb-2 text-2xl font-bold">{product.name}</h1>
-      <p className="mb-6 leading-relaxed text-muted">{product.description}</p>
+      <h1 className="mb-3 text-2xl font-bold">{product.name}</h1>
+      <p className="mb-8 leading-relaxed text-muted">{product.description}</p>
 
       {/* Tags */}
       <div className="mb-6 flex flex-wrap gap-2">
@@ -90,6 +90,13 @@ export default function ProductDetailPage() {
           className="flex-1 rounded-2xl bg-primary py-4 text-center text-lg font-semibold text-white transition-all hover:bg-primary-dark active:scale-[0.98]"
         >
           장바구니에 담기
+        </button>
+        <button
+          onClick={() => router.push("/gift/create")}
+          className="rounded-2xl bg-surface px-5 py-4 text-lg shadow-sm transition-all hover:shadow-md active:scale-[0.98]"
+          title="선물하기"
+        >
+          🎁
         </button>
       </div>
     </div>

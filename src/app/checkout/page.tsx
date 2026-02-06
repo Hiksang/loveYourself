@@ -35,7 +35,7 @@ export default function CheckoutPage() {
   // Success screen
   if (orderResult) {
     return (
-      <div className="flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
+      <div className="flex min-h-[80dvh] flex-col items-center justify-center px-6 text-center">
         <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-5xl">
           ✓
         </div>
@@ -104,10 +104,10 @@ export default function CheckoutPage() {
         ← 뒤로
       </button>
 
-      <h1 className="mb-6 text-2xl font-bold">주문하기</h1>
+      <h1 className="mb-4 text-2xl font-bold">주문하기</h1>
 
       {/* Order summary */}
-      <div className="mb-6 rounded-2xl bg-surface p-4 shadow-sm">
+      <div className="mb-8 rounded-2xl bg-surface p-4 shadow-sm">
         <h2 className="mb-3 text-sm font-semibold text-muted">주문 상품</h2>
         {items.map((item) => (
           <div
@@ -133,7 +133,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* Pickup location */}
-      <div className="mb-6">
+      <div className="mb-8">
         <PickupSelector
           selected={selectedLocation}
           onSelect={setSelectedLocation}
@@ -141,7 +141,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* Currency selection */}
-      <div className="mb-6">
+      <div className="mb-8">
         <h2 className="mb-3 text-lg font-bold">결제 수단</h2>
         <div className="flex gap-2">
           <button

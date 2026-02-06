@@ -12,7 +12,7 @@ export default function CartPage() {
 
   if (!isVerified) {
     return (
-      <div className="flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
+      <div className="flex min-h-[80dvh] flex-col items-center justify-center px-6 text-center">
         <span className="mb-4 text-6xl">🔒</span>
         <h2 className="mb-2 text-xl font-bold">로그인이 필요합니다</h2>
         <button
@@ -27,7 +27,7 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
+      <div className="flex min-h-[80dvh] flex-col items-center justify-center px-6 text-center">
         <span className="mb-4 text-6xl">🛒</span>
         <h2 className="mb-2 text-xl font-bold">장바구니가 비어있습니다</h2>
         <p className="mb-6 text-sm text-muted">
