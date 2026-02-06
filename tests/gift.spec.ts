@@ -47,7 +47,7 @@ test.describe("선물 만들기", () => {
 
     // Should see gift code
     await expect(page.locator("text=선물 준비 완료!")).toBeVisible({ timeout: 10000 });
-    await expect(page.locator("text=선물 코드")).toBeVisible();
+    await expect(page.getByText("선물 코드", { exact: true })).toBeVisible();
     await expect(page.locator("text=선물 코드 공유하기")).toBeVisible();
   });
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthContext";
 import { products } from "@/data/products";
@@ -17,7 +17,7 @@ type CartItem = {
 };
 
 export default function GiftCreatePage() {
-  const { isLoggedIn, isVerified, nullifierHash } = useAuth();
+  const { isLoggedIn, isVerified, nullifierHash, isReady } = useAuth();
   const router = useRouter();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [selectedItems, setSelectedItems] = useState<CartItem[]>([]);
@@ -29,9 +29,18 @@ export default function GiftCreatePage() {
 
   const authenticated = isLoggedIn && isVerified;
 
-  if (!authenticated) {
-    router.push("/");
-    return null;
+  useEffect(() => {
+    if (isReady && !authenticated) {
+      router.push("/");
+    }
+  }, [isReady, authenticated, router]);
+
+  if (!isReady || !authenticated) {
+    return (
+      <div className="flex min-h-[80dvh] items-center justify-center">
+        <span className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
   }
 
   const totalWLD = selectedItems.reduce((sum, i) => sum + i.price * i.quantity, 0);

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthContext";
 import { products } from "@/data/products";
 import type { PostCategory } from "@/lib/community";
 
 export default function NewPostPage() {
-  const { isLoggedIn, isVerified, nullifierHash } = useAuth();
+  const { isLoggedIn, isVerified, nullifierHash, isReady } = useAuth();
   const router = useRouter();
   const [category, setCategory] = useState<PostCategory>("general");
   const [productId, setProductId] = useState("");
@@ -18,9 +18,18 @@ export default function NewPostPage() {
 
   const authenticated = isLoggedIn && isVerified;
 
-  if (!authenticated) {
-    router.push("/");
-    return null;
+  useEffect(() => {
+    if (isReady && !authenticated) {
+      router.push("/");
+    }
+  }, [isReady, authenticated, router]);
+
+  if (!isReady || !authenticated) {
+    return (
+      <div className="flex min-h-[80dvh] items-center justify-center">
+        <span className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
   }
 
   const handleSubmit = async () => {

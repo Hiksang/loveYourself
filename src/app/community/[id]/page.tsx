@@ -42,7 +42,7 @@ function timeAgo(dateStr: string): string {
 export default function PostDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { isLoggedIn, isVerified, nullifierHash } = useAuth();
+  const { isLoggedIn, isVerified, nullifierHash, isReady } = useAuth();
   const [post, setPost] = useState<PostDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [replyContent, setReplyContent] = useState("");
@@ -66,12 +66,13 @@ export default function PostDetailPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated, postId, nullifierHash]);
 
-  if (!authenticated) {
-    router.push("/");
-    return null;
-  }
+  useEffect(() => {
+    if (isReady && !authenticated) {
+      router.push("/");
+    }
+  }, [isReady, authenticated, router]);
 
-  if (loading) {
+  if (!isReady || !authenticated || loading) {
     return (
       <div className="flex min-h-[80dvh] items-center justify-center">
         <span className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />

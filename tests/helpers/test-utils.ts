@@ -1,11 +1,11 @@
 import { type Page, expect } from "@playwright/test";
 
 /**
- * Navigate to a path with dev mode auto-authentication
+ * Navigate to a path with dev mode auto-authentication.
  */
 export async function gotoAuth(page: Page, path: string) {
   const sep = path.includes("?") ? "&" : "?";
-  await page.goto(`${path}${sep}dev=true`);
+  await page.goto(`${path}${sep}dev=true`, { waitUntil: "networkidle" });
 }
 
 /**

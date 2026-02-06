@@ -5,7 +5,7 @@ test.describe("추천 시스템", () => {
   test("추천 페이지 렌더링", async ({ page }) => {
     await gotoAuth(page, "/referral");
     // Should render referral page
-    await expect(page.locator("text=추천")).toBeVisible();
+    await expect(page.locator("h1:has-text('친구 추천')")).toBeVisible();
   });
 
   test("추천 코드 생성 및 공유 버튼 표시", async ({ page }) => {

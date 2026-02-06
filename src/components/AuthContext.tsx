@@ -15,6 +15,7 @@ type AuthState = {
   isVerified: boolean;
   walletAddress: string | null;
   nullifierHash: string | null;
+  isReady: boolean;
 };
 
 type AuthContextType = AuthState & {
@@ -31,6 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isVerified: false,
     walletAddress: null,
     nullifierHash: null,
+    isReady: false,
   });
 
   const searchParams = useSearchParams();
@@ -43,7 +45,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isVerified: true,
         walletAddress: "0xDev000000000000000000000000000000000000",
         nullifierHash: "0xDev_nullifier_hash_for_testing",
+        isReady: true,
       });
+    } else {
+      setAuth((prev) => ({ ...prev, isReady: true }));
     }
   }, [searchParams]);
 
@@ -56,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const logout = useCallback(() => {
-    setAuth({ isLoggedIn: false, isVerified: false, walletAddress: null, nullifierHash: null });
+    setAuth({ isLoggedIn: false, isVerified: false, walletAddress: null, nullifierHash: null, isReady: true });
   }, []);
 
   return (

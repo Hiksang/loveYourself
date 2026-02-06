@@ -43,7 +43,7 @@ test.describe("위시리스트", () => {
 
   test("위시리스트 페이지 확인", async ({ page }) => {
     await gotoAuth(page, "/wishlist");
-    // Page should render without error
-    await expect(page.locator("h1")).toBeVisible();
+    // Page should render without error (empty state shows h2)
+    await expect(page.locator("h2:has-text('위시리스트가 비어있습니다')")).toBeVisible();
   });
 });
