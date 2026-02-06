@@ -81,8 +81,34 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Verification failed — return details for debugging
+    // Check if already verified (max_verifications_reached = user already proved identity)
     const errorInfo = verifyRes as unknown as Record<string, unknown>;
+    if (errorInfo.code === "max_verifications_reached") {
+      const nullifierHash = payload.nullifier_hash;
+      setVerified(nullifierHash);
+      setSession(nullifierHash, true);
+
+      const cookieStore = await cookies();
+      cookieStore.set("age-verified", "true", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 30,
+      });
+      cookieStore.set("nullifier-hash", nullifierHash, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 30,
+      });
+
+      return NextResponse.json({
+        status: "success",
+        nullifierHash,
+      });
+    }
+
+    // Verification failed — return details for debugging
     console.error("World ID verification failed:", errorInfo);
     return NextResponse.json(
       {
