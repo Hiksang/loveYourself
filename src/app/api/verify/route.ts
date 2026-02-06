@@ -13,35 +13,82 @@ export async function POST(req: NextRequest) {
     action: string;
   };
 
-  const app_id = process.env.APP_ID as `app_${string}`;
-
-  const verifyRes = (await verifyCloudProof(
-    payload,
-    app_id,
-    action
-  )) as IVerifyResponse;
-
-  if (verifyRes.success) {
-    const cookieStore = await cookies();
-    const address = cookieStore.get("wallet-address")?.value;
-
-    if (address) {
-      setVerified(address);
-      setSession(address, true);
-    }
-
-    cookieStore.set("age-verified", "true", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-    });
-
-    return NextResponse.json({ status: "success" });
+  // Validate required fields
+  if (!payload?.proof || !payload?.merkle_root || !payload?.nullifier_hash) {
+    return NextResponse.json(
+      { status: "error", message: "Missing required proof fields" },
+      { status: 400 }
+    );
   }
 
-  return NextResponse.json(
-    { status: "error", message: "Verification failed" },
-    { status: 400 }
-  );
+  if (!action) {
+    return NextResponse.json(
+      { status: "error", message: "Missing action" },
+      { status: 400 }
+    );
+  }
+
+  const app_id = process.env.APP_ID as `app_${string}`;
+
+  if (!app_id || app_id === "app_staging_xxxxx") {
+    return NextResponse.json(
+      { status: "error", message: "APP_ID not configured" },
+      { status: 500 }
+    );
+  }
+
+  try {
+    const verifyRes = (await verifyCloudProof(
+      payload,
+      app_id,
+      action
+    )) as IVerifyResponse;
+
+    if (verifyRes.success) {
+      const nullifierHash = payload.nullifier_hash;
+
+      // Store verification state using nullifier_hash as identifier
+      setVerified(nullifierHash);
+      setSession(nullifierHash, true);
+
+      // Set verification cookie
+      const cookieStore = await cookies();
+      cookieStore.set("age-verified", "true", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
+      cookieStore.set("nullifier-hash", nullifierHash, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 30,
+      });
+
+      return NextResponse.json({
+        status: "success",
+        nullifierHash,
+      });
+    }
+
+    // Verification failed — return details for debugging
+    const errorInfo = verifyRes as unknown as Record<string, unknown>;
+    console.error("World ID verification failed:", errorInfo);
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "Verification failed",
+        code: errorInfo.code || "unknown",
+        detail: errorInfo.detail || null,
+      },
+      { status: 400 }
+    );
+  } catch (err) {
+    console.error("verifyCloudProof error:", err);
+    return NextResponse.json(
+      { status: "error", message: "Internal verification error" },
+      { status: 500 }
+    );
+  }
 }

@@ -45,11 +45,12 @@ export function LoginButton() {
       const result = await res.json();
       if (result.status === "success") {
         // World ID 인증 성공 → 로그인 + 성인인증 동시 완료
-        const address = `0x${finalPayload.nullifier_hash.slice(2, 42)}`;
-        login(address, finalPayload.nullifier_hash);
+        login(result.nullifierHash, result.nullifierHash);
         verify();
       } else {
-        setError("인증에 실패했습니다. 다시 시도해주세요.");
+        console.error("Verify failed:", result);
+        const detail = result.detail ? ` (${result.detail})` : "";
+        setError(`인증에 실패했습니다${detail}. 다시 시도해주세요.`);
       }
     } catch (err) {
       console.error("World ID login error:", err);
