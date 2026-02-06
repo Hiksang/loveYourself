@@ -16,7 +16,6 @@ export default function Home() {
       <div className="px-6">
         {/* Hero */}
         <div className="mb-8 mt-4 text-center" style={{ marginTop: 16 }}>
-          <div className="mb-4 text-6xl">💜</div>
           <h2 className="mb-2 text-3xl font-bold tracking-tight">
             <span className="text-primary">Love</span> Yourself
           </h2>
@@ -29,28 +28,24 @@ export default function Home() {
 
         {/* Auth Card */}
         <div className="mb-8 space-y-4">
-          <div className="rounded-2xl bg-surface p-5 shadow-sm">
-            <div className="mb-3 flex items-center gap-3">
-              <span
-                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-                  authenticated
-                    ? "bg-green-100 text-green-700"
-                    : "bg-primary/10 text-primary"
-                }`}
-              >
-                {authenticated ? "✓" : "1"}
-              </span>
-              <div>
-                <h3 className="font-semibold">World ID 인증</h3>
-                <p className="text-xs text-muted">
-                  한 번의 인증으로 로그인 + 성인 확인 완료
-                </p>
+          {!authenticated && (
+            <div className="rounded-2xl bg-surface p-5 shadow-sm">
+              <div className="mb-3 flex items-center gap-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold bg-primary/10 text-primary">
+                  1
+                </span>
+                <div>
+                  <h3 className="font-semibold">World ID 인증</h3>
+                  <p className="text-xs text-muted">
+                    한 번의 인증으로 로그인 + 성인 확인 완료
+                  </p>
+                </div>
               </div>
+              <LoginButton />
             </div>
-            <LoginButton />
-          </div>
+          )}
 
-          {/* Step 2: Shop */}
+          {/* Shop */}
           <div className="rounded-2xl bg-surface p-5 shadow-sm">
             <div className="mb-3 flex items-center gap-3">
               <span
@@ -60,7 +55,7 @@ export default function Home() {
                     : "bg-gray-100 text-muted"
                 }`}
               >
-                2
+                {authenticated ? "✓" : "2"}
               </span>
               <div>
                 <h3 className={`font-semibold ${!authenticated ? "text-muted" : ""}`}>
