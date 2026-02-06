@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  type ReactNode,
+} from "react";
+import { useSearchParams } from "next/navigation";
 
 type AuthState = {
   isLoggedIn: boolean;
@@ -22,6 +30,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isVerified: false,
     walletAddress: null,
   });
+
+  const searchParams = useSearchParams();
+
+  // Dev mode: ?dev=true auto-authenticates for testing
+  useEffect(() => {
+    if (searchParams.get("dev") === "true") {
+      setAuth({
+        isLoggedIn: true,
+        isVerified: true,
+        walletAddress: "0xDev000000000000000000000000000000000000",
+      });
+    }
+  }, [searchParams]);
 
   const login = useCallback((address: string) => {
     setAuth((prev) => ({ ...prev, isLoggedIn: true, walletAddress: address }));

@@ -1,7 +1,6 @@
 "use client";
 
 import { LoginButton } from "@/components/LoginButton";
-import { AgeVerification } from "@/components/AgeVerification";
 import { Header } from "@/components/Header";
 import { useAuth } from "@/components/AuthContext";
 import { useRouter } from "next/navigation";
@@ -9,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const { isLoggedIn, isVerified } = useAuth();
   const router = useRouter();
+  const authenticated = isLoggedIn && isVerified;
 
   return (
     <div>
@@ -27,73 +27,61 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Steps */}
+        {/* Auth Card */}
         <div className="mb-8 space-y-4">
-          {/* Step 1: Login */}
           <div className="rounded-2xl bg-surface p-5 shadow-sm">
             <div className="mb-3 flex items-center gap-3">
               <span
                 className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-                  isLoggedIn
+                  authenticated
                     ? "bg-green-100 text-green-700"
                     : "bg-primary/10 text-primary"
                 }`}
               >
-                {isLoggedIn ? "✓" : "1"}
+                {authenticated ? "✓" : "1"}
               </span>
               <div>
-                <h3 className="font-semibold">익명 로그인</h3>
-                <p className="text-xs text-muted">지갑 주소만으로 가입 · 이름 불필요</p>
-              </div>
-            </div>
-            {!isLoggedIn && <LoginButton />}
-          </div>
-
-          {/* Step 2: Verify */}
-          <div className="rounded-2xl bg-surface p-5 shadow-sm">
-            <div className="mb-3 flex items-center gap-3">
-              <span
-                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-                  isVerified
-                    ? "bg-green-100 text-green-700"
-                    : "bg-primary/10 text-primary"
-                }`}
-              >
-                {isVerified ? "✓" : "2"}
-              </span>
-              <div>
-                <h3 className="font-semibold">성인 인증</h3>
+                <h3 className="font-semibold">World ID 인증</h3>
                 <p className="text-xs text-muted">
-                  World ID 영지식증명 · 개인정보 노출 없음
+                  한 번의 인증으로 로그인 + 성인 확인 완료
                 </p>
               </div>
             </div>
-            {isLoggedIn && !isVerified && <AgeVerification />}
-            {!isLoggedIn && (
-              <p className="text-xs text-muted">먼저 로그인을 완료해주세요</p>
-            )}
+            <LoginButton />
           </div>
 
-          {/* Step 3: Shop */}
+          {/* Step 2: Shop */}
           <div className="rounded-2xl bg-surface p-5 shadow-sm">
             <div className="mb-3 flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                3
+              <span
+                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
+                  authenticated
+                    ? "bg-primary text-white"
+                    : "bg-gray-100 text-muted"
+                }`}
+              >
+                2
               </span>
               <div>
-                <h3 className="font-semibold">익명 쇼핑</h3>
+                <h3 className={`font-semibold ${!authenticated ? "text-muted" : ""}`}>
+                  익명 쇼핑
+                </h3>
                 <p className="text-xs text-muted">
                   WLD/USDC 결제 · 편의점/무인택배함 수령
                 </p>
               </div>
             </div>
-            {isVerified && (
+            {authenticated ? (
               <button
                 onClick={() => router.push("/products")}
                 className="w-full rounded-2xl bg-primary px-6 py-4 text-lg font-semibold text-white transition-all hover:bg-primary-dark active:scale-[0.98]"
               >
                 쇼핑 시작하기
               </button>
+            ) : (
+              <p className="text-xs text-muted">
+                먼저 World ID 인증을 완료해주세요
+              </p>
             )}
           </div>
         </div>
@@ -105,9 +93,9 @@ export default function Home() {
           </h3>
           <div className="grid grid-cols-2 gap-3">
             <FeatureCard
-              icon="🔒"
-              title="영지식증명"
-              desc="나이만 증명, 신분증 불필요"
+              icon="🌐"
+              title="World ID"
+              desc="한 번 인증으로 로그인 + 성인확인"
             />
             <FeatureCard
               icon="💰"

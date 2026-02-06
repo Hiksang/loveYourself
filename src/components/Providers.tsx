@@ -3,7 +3,7 @@
 import { MiniKit } from "@worldcoin/minikit-js";
 import { CartProvider } from "@/store/cart";
 import { AuthProvider } from "@/components/AuthContext";
-import { useEffect, type ReactNode } from "react";
+import { Suspense, useEffect, type ReactNode } from "react";
 
 export function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -11,8 +11,10 @@ export function Providers({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthProvider>
-      <CartProvider>{children}</CartProvider>
-    </AuthProvider>
+    <Suspense>
+      <AuthProvider>
+        <CartProvider>{children}</CartProvider>
+      </AuthProvider>
+    </Suspense>
   );
 }
