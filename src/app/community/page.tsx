@@ -62,6 +62,12 @@ export default function CommunityPage() {
 
   return (
     <div className="px-6 pt-6 pb-8">
+      <button
+        onClick={() => router.back()}
+        className="mb-4 text-sm text-muted hover:text-foreground transition-colors"
+      >
+        ← 뒤로
+      </button>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">커뮤니티</h1>
         <button

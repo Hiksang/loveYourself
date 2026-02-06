@@ -87,6 +87,12 @@ export default function SubscriptionPage() {
 
   return (
     <div className="px-6 pt-6 pb-8">
+      <button
+        onClick={() => router.back()}
+        className="mb-4 text-sm text-muted hover:text-foreground transition-colors"
+      >
+        ← 뒤로
+      </button>
       <h1 className="mb-3 text-2xl font-bold">구독 박스</h1>
       <p className="mb-8 text-sm text-muted">매월 새로운 셀프케어 아이템을 만나보세요</p>
 

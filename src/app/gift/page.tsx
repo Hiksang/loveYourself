@@ -51,6 +51,12 @@ export default function GiftHubPage() {
 
   return (
     <div className="px-6 pt-6 pb-8">
+      <button
+        onClick={() => router.back()}
+        className="mb-4 text-sm text-muted hover:text-foreground transition-colors"
+      >
+        ← 뒤로
+      </button>
       <h1 className="mb-4 text-2xl font-bold">익명 선물하기</h1>
 
       <div className="mb-8 space-y-3">

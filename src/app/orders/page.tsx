@@ -69,6 +69,12 @@ export default function OrdersPage() {
 
   return (
     <div className="px-6 pt-6 pb-8">
+      <button
+        onClick={() => router.back()}
+        className="mb-4 text-sm text-muted hover:text-foreground transition-colors"
+      >
+        ← 뒤로
+      </button>
       <h1 className="mb-4 text-2xl font-bold">주문 내역</h1>
 
       <div className="space-y-4">

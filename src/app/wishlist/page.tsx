@@ -36,6 +36,12 @@ export default function WishlistPage() {
 
   return (
     <div className="px-6 pt-6 pb-8">
+      <button
+        onClick={() => router.back()}
+        className="mb-4 text-sm text-muted hover:text-foreground transition-colors"
+      >
+        ← 뒤로
+      </button>
       <h1 className="mb-4 text-2xl font-bold">위시리스트</h1>
       <p className="mb-4 text-sm text-muted">{wishedProducts.length}개 상품</p>
       <div className="grid grid-cols-2 gap-3">
